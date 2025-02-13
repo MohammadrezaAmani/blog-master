@@ -1,0 +1,17 @@
+services:
+  minio:
+    image: minio/minio
+    command: server /data --console-address ":9001"
+    env_file:
+      - ../.env
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - backend
+volumes:
+  minio_data:
+networks:
+  backend:

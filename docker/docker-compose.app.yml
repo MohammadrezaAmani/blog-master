@@ -1,0 +1,21 @@
+services:
+  app:
+    build: ../../
+    env_file:
+      - ../.env
+    depends_on:
+      - redis
+      - minio
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+    #   interval: 4s
+    #   timeout: 1s
+    #   retries: 1
+    networks:
+      - backend
+      - frontend
+    ports:
+      - 8000:8000
+networks:
+  backend:
+  frontend:

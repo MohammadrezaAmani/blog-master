@@ -1,0 +1,22 @@
+services:
+  postgresql:
+    image: docker.io/library/postgres:16-alpine
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    volumes:
+      - database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?database password required}
+      POSTGRES_USER: ${POSTGRES_USER:-authentik}
+      POSTGRES_DB: ${POSTGRES_DB:-authentik}
+    env_file:
+      - ../.env
+
+volumes:
+  database:
+    driver: local

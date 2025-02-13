@@ -1,0 +1,9 @@
+services: {}
+
+include:
+  - docker/docker-compose.postgres.yml
+  - docker/docker-compose.redis.yml
+  - docker/docker-compose.minio.yml
+  - docker/docker-compose.app.yml
+  - docker/docker-compose.authentik.yml
+  - docker/docker-compose.nginx.yml
