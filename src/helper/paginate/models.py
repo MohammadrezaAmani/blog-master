@@ -2,8 +2,9 @@ from typing import Callable, Generic, List, TypeVar
 
 from fastapi import HTTPException
 from pydantic import BaseModel
-from src.helper.utils import call
 from tortoise.queryset import QuerySet, ValuesQuery
+
+from src.helper.utils import call
 
 T = TypeVar("T")
 

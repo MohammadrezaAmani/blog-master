@@ -1,5 +1,6 @@
-from src.base import BaseModel
 from tortoise import fields
+
+from src.base import BaseModel
 
 
 class Permission(BaseModel):
@@ -20,3 +21,11 @@ class Group(BaseModel):
 
     def __repr__(self):
         return self.__str__()
+
+
+class Access(BaseModel):
+    user = fields.ForeignKeyField("models.User")
+    role = fields.CharField(max_length=256)
+
+    class Meta:
+        table = "access"

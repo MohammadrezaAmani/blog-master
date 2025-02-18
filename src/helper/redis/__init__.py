@@ -2,6 +2,7 @@ import time
 from typing import Any, Dict, List, Optional
 
 from redis.client import Redis
+
 from src.config.settings import (
     REDIS_HOST,
     REDIS_KWARGS,

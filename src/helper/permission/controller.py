@@ -1,6 +1,7 @@
 from functools import wraps
 
 from fastapi import HTTPException, Request
+
 from src.helper.permission.model import Permission
 
 

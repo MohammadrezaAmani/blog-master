@@ -3,6 +3,7 @@ from datetime import timedelta
 
 from fastapi import HTTPException
 from minio import Minio
+
 from src.config.settings import (
     AWS_ACCESS_KEY,
     AWS_SECRET_ACCESS_KEY,

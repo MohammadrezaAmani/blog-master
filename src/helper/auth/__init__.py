@@ -6,6 +6,8 @@ from fastapi.responses import Response
 from fastapi.security import OAuth2PasswordBearer
 from jwt import decode, encode
 from jwt.exceptions import ExpiredSignatureError, PyJWTError
+from tortoise.exceptions import DoesNotExist
+
 from src.config import (
     ACCESS_TOKEN_EXPIRE_MINUTES,
     JWT_HASH_ALGORITHM,
@@ -14,7 +16,6 @@ from src.config import (
     SECRET_KEY,
 )
 from src.helper.user.model import User
-from tortoise.exceptions import DoesNotExist
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 

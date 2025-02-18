@@ -1,8 +1,9 @@
 from enum import Enum
 
+from tortoise import fields, models
+
 from src.config import USER_MODEL
 from src.helper.user.model import User
-from tortoise import fields, models
 
 
 class ActionEnum(str, Enum):
@@ -10,6 +11,7 @@ class ActionEnum(str, Enum):
     UPDATE = "update"
     DELETE = "delete"
     VIEW = "view"
+    VIEW_ALL = "view_all"
 
 
 class Log(models.Model):

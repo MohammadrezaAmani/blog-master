@@ -1,4 +1,5 @@
 from aiocache import Cache, cached
+
 from src.config.settings import REDIS_HOST, REDIS_PORT
 
 cache = Cache.REDIS

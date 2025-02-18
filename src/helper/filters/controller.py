@@ -2,9 +2,10 @@ from typing import Any, Optional, Type
 
 from fastapi import Query
 from pydantic import create_model
-from src.config import FILTER_OPERATIONS
 from tortoise.fields import ManyToManyRelation
 from tortoise.models import Model
+
+from src.config import FILTER_OPERATIONS
 
 
 def create_filter_schema(

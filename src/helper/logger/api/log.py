@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, Query, Request
 from fastapi.responses import RedirectResponse
+
 from src.config.util import get_user_model
 from src.helper.auth import login_required
 from src.helper.filters import create_filter_schema

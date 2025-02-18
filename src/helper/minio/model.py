@@ -5,10 +5,11 @@ from typing import List, Tuple
 
 from aiofiles import open as aio_open
 from fastapi import UploadFile
+from tortoise import fields
+
 from src.base import BaseModel
 from src.config.settings import MINIO_BASE_BUCKETS
 from src.helper.minio.controller import generate_presigned_url, upload_to_minio
-from tortoise import fields
 
 
 class File(BaseModel):

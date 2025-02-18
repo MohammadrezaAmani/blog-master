@@ -1,5 +1,6 @@
-from src.base import BaseModel, BaseUser
 from tortoise import fields
+
+from src.base import BaseModel, BaseUser
 
 
 class User(BaseModel, BaseUser):
@@ -8,4 +9,4 @@ class User(BaseModel, BaseUser):
     is_active = fields.BooleanField(default=True)
     mobile = fields.CharField(max_length=20, null=True)
     group = fields.ForeignKeyField("models.Group", related_name="user")
-    image = fields.ManyToManyField("models.File", related_name="user")
+    # image = fields.ManyToManyField("models.File", related_name="user_profile")
