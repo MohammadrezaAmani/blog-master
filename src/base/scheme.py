@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from tortoise import Model
 from tortoise.queryset import QuerySet
 
-from src.helper.utils import call
+from src.base.utils import call
 
 T = TypeVar("T")
 

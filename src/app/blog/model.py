@@ -1,10 +1,10 @@
 from tortoise import fields
 
-from src.base import BaseModel
+from src.base.model import BaseModel
 
 
 class Post(BaseModel):
-    title = fields.CharField()
+    title = fields.CharField(max_length=512)
     body = fields.TextField(null=True)
     user = fields.ForeignKeyField("models.User", related_name="post")
     react = fields.ManyToManyField("models.React", related_name="post")

@@ -10,7 +10,7 @@ APPS = [
     "src.helper.logger.model",
     "src.helper.user.model",
     "src.helper.common.model",
-    "src.app.project.model",
+    "src.app.blog.model",
 ]
 
 
