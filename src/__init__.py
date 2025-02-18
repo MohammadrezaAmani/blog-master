@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
+
 from src.config import (
     DEBUG,
     SHOW_QUERIES_IN_SWAGGER,
@@ -6,9 +8,8 @@ from src.config import (
     lifespan,
     remove_queries_from_swagger,
 )
-from starlette.middleware.cors import CORSMiddleware
 
-app = FastAPI(title="BIONEX Backend", lifespan=lifespan, debug=DEBUG)
+app = FastAPI(title="Blog Master Backend", lifespan=lifespan, debug=DEBUG)
 if DEBUG:
     from debug_toolbar.middleware import DebugToolbarMiddleware
 

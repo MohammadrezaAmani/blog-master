@@ -6,22 +6,23 @@ DEBUG = True
 DB_URL = "sqlite://db.sqlite3"
 
 APPS = [
-    "src.helpers.permission.models",
-    "src.helpers.logger.models",
-    "src.apps.user.models",
-    "src.apps.common.models",
+    "src.helper.permission.model",
+    "src.helper.logger.model",
+    "src.helper.user.model",
+    "src.helper.common.model",
+    "src.app.project.model",
 ]
 
 
-USE_MINIO = config("USE_MINIO", cast=bool, default=True)
-USE_REDIS = config("USE_REDIS", cast=bool, default=True)
+USE_MINIO = config("USE_MINIO", cast=bool, default=False)
+USE_REDIS = config("USE_REDIS", cast=bool, default=False)
 
 
 if USE_MINIO:
-    APPS.append("src.helpers.minio.models")
+    APPS.append("src.helper.minio.model")
 
 USER_MODEL = "models.User"
-USER_MODEL_PATH = "src.apps.user.models"
+USER_MODEL_PATH = "src.helper.user.model"
 
 GENERATE_SCHEMES = True
 ADD_EXCEPTION_HANDLERS = True
@@ -53,7 +54,7 @@ TORTOISE_ORM = {
 CACHE_TTL = config("CACHE_TTL", cast=int, default=3600)
 
 if USE_MINIO:
-    MINIO_HOST = config("MINIO_HOST", default="localhost")
+    MINIO_HOST = config("MINIO_HOST", default="192.168.10.53")
     MINIO_PORT = config("MINIO_PORT", cast=int, default=9000)
     AWS_ACCESS_KEY = "p3HcYZqccEk50mgVd08V"  # config("AWS_ACCESS_KEY", default="")
     AWS_SECRET_ACCESS_KEY = "ZkCcW5YWUCXXyPMa6ZMXrXWCD6uJK57tFKO1ynP4"  # config("AWS_SECRET_ACCESS_KEY", default="")
@@ -69,15 +70,6 @@ if USE_REDIS:
     REDIS_URI = f"redis://{REDIS_HOST}:{REDIS_PORT}"
     REDIS_KWARGS = {}
 
-POSTGRES_USER = config("POSTGRES_USER", default="user")
-POSTGRES_PASSWORD = config("POSTGRES_PASSWORD", default="password")
-POSTGRES_DB = config("POSTGRES_DB", default="dbname")
-POSTGRES_HOST = config("POSTGRES_HOST", default="localhost")
-POSTGRES_PORT = config("POSTGRES_PORT", cast=int, default=5432)
-DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
-
-NGINX_HOST = config("NGINX_HOST", default="0.0.0.0")
-NGINX_PORT = config("NGINX_PORT", cast=int, default=80)
 
 SHOW_QUERIES_IN_SWAGGER = False
 

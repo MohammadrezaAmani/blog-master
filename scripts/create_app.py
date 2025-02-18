@@ -114,27 +114,32 @@ from src.helper import (
     ActionEnum,
     Filter,
     OrderBy,
+    Paginated,
     Paginator,
+    Status,
     create_filter_schema,
+    has_access,
     log_action,
     login_required,
-    Status,
-    Paginated,
 )
+from src.helper.user.model import User
 from tortoise.queryset import Q
 
 router = APIRouter()
 
 {model_title}FilterSchema = create_filter_schema({model_title})
 
+MODEL_NAME: str = {model_title}._meta.db_table
+
 @router.get("/", response_model=Paginated[{model_title}ResponseScheme] | List[{model_title}ResponseScheme])
-@log_action(action=ActionEnum.VIEW.value, model={model_title}._meta.db_table)
+@log_action(action=ActionEnum.VIEW_ALL.value, model=MODEL_NAME)
+@has_access(action=ActionEnum.VIEW_ALL.value, to=MODEL_NAME)
 async def get_{model_name}s_router(
     request: Request,
     page: int = Query(1, ge=1),
     limit: int = Query(10, le=100),
     filters: {model_title}FilterSchema = Depends(),  # type: ignore
-    user=Depends(login_required),
+    user: User=Depends(login_required),
     sort_by: list[str] = Query([]),
     pagination: bool = Query(True),
 ):
@@ -146,10 +151,11 @@ async def get_{model_name}s_router(
     )
 
 @router.post("/", response_model={model_title}ResponseScheme)
-@log_action(action=ActionEnum.CREATE.value, model={model_title}._meta.db_table)
+@log_action(action=ActionEnum.CREATE.value, model=MODEL_NAME)
+@has_access(action=ActionEnum.CREATE.value, to=MODEL_NAME)
 async def create_{model_name}_router(
     object: {model_title}CreateScheme,
-    user=Depends(login_required),
+    user: User=Depends(login_required),
 ):
     return await object.create(
         {model_title},
@@ -161,11 +167,12 @@ async def create_{model_name}_router(
                 + """
 @router.get("/{id}","""
                 + f"""response_model={model_title}ResponseScheme)
-@log_action(action=ActionEnum.VIEW.value, model={model_title}._meta.db_table)
+@log_action(action=ActionEnum.VIEW.value, model=MODEL_NAME)
+@has_access(action=ActionEnum.VIEW.value, to=MODEL_NAME)
 async def get_{model_name}_router(
     id: str,
     request: Request,
-    user=Depends(login_required),
+    user: User=Depends(login_required),
 ):
     objects = {model_title}.all()
     return await {model_title}ResponseScheme.from_tortoise_orm({model_title}ResponseScheme, await objects.get(Q(id=id) if str(id).isdigit() else Q(slug=str(id))))
@@ -175,11 +182,12 @@ async def get_{model_name}_router(
 @router.put("/{id}","""
                 + f""" response_model={model_title}ResponseScheme)
                 
-@log_action(action=ActionEnum.UPDATE.value, model={model_title}._meta.db_table)
+@log_action(action=ActionEnum.UPDATE.value, model=MODEL_NAME)
+@has_access(action=ActionEnum.UPDATE.value, to=MODEL_NAME)
 async def update_{model_name}_router(
     id: int,
     object: {model_title}CreateScheme,
-    user=Depends(login_required),
+    user: User=Depends(login_required),
 ):
     objects = {model_title}.all()
     return await object.update(
@@ -192,9 +200,10 @@ async def update_{model_name}_router(
 @router.delete("/{id}", response_model=Status)
 """
                 + f"""
-@log_action(action=ActionEnum.DELETE.value, model={model_title}._meta.db_table)
-async def delete_{model_name}_router(id: int):
-    objects = {model_title}.all()
+@log_action(action=ActionEnum.DELETE.value, model=MODEL_NAME)
+@has_access(action=ActionEnum.DELETE.value, to=MODEL_NAME)
+async def delete_{model_name}_router(id: int, user: User = Depends(login_required)):
+    objects = {model_title}.filter().all()
     deleted_count = await objects.filter(id=id).delete()
     if not deleted_count:
         raise HTTPException(status_code=404, detail=f"{model_title}"""

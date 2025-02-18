@@ -1,2 +1,16 @@
+aerich
+aiocache
+aiofiles
+argon2-cffi
 fastapi
+fastapi-debug-toolbar
+hiredis
+minio
+pydantic
+PyJWT
+python-decouple
+python-multipart
+redis
+tortoise-cli
+tortoise-orm
 uvicorn

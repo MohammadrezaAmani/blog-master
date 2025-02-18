@@ -4,9 +4,10 @@ from contextlib import asynccontextmanager
 from typing import AsyncGenerator, Type
 
 from fastapi import FastAPI
-from src.config.settings import TORTOISE_ORM, USE_MINIO, USER_MODEL, USER_MODEL_PATH
 from tortoise import Model, Tortoise, generate_config
 from tortoise.contrib.fastapi import RegisterTortoise
+
+from src.config.settings import TORTOISE_ORM, USE_MINIO, USER_MODEL, USER_MODEL_PATH
 
 
 def remove_queries_from_swagger(app: FastAPI):
