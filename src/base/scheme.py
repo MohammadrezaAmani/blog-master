@@ -2,9 +2,10 @@ from datetime import datetime
 from typing import Any, TypeVar
 
 from pydantic import BaseModel
-from src.helper.utils import call
 from tortoise import Model
 from tortoise.queryset import QuerySet
+
+from src.helper.utils import call
 
 T = TypeVar("T")
 
